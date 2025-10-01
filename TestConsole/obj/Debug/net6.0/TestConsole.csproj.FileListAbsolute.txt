@@ -1,0 +1,14 @@
+/home/rbantu/projects/agentic-ai/TestConsole/bin/Debug/net6.0/TestConsole
+/home/rbantu/projects/agentic-ai/TestConsole/bin/Debug/net6.0/TestConsole.deps.json
+/home/rbantu/projects/agentic-ai/TestConsole/bin/Debug/net6.0/TestConsole.runtimeconfig.json
+/home/rbantu/projects/agentic-ai/TestConsole/bin/Debug/net6.0/TestConsole.dll
+/home/rbantu/projects/agentic-ai/TestConsole/bin/Debug/net6.0/TestConsole.pdb
+/home/rbantu/projects/agentic-ai/TestConsole/obj/Debug/net6.0/TestConsole.GeneratedMSBuildEditorConfig.editorconfig
+/home/rbantu/projects/agentic-ai/TestConsole/obj/Debug/net6.0/TestConsole.AssemblyInfoInputs.cache
+/home/rbantu/projects/agentic-ai/TestConsole/obj/Debug/net6.0/TestConsole.AssemblyInfo.cs
+/home/rbantu/projects/agentic-ai/TestConsole/obj/Debug/net6.0/TestConsole.csproj.CoreCompileInputs.cache
+/home/rbantu/projects/agentic-ai/TestConsole/obj/Debug/net6.0/TestConsole.dll
+/home/rbantu/projects/agentic-ai/TestConsole/obj/Debug/net6.0/refint/TestConsole.dll
+/home/rbantu/projects/agentic-ai/TestConsole/obj/Debug/net6.0/TestConsole.pdb
+/home/rbantu/projects/agentic-ai/TestConsole/obj/Debug/net6.0/TestConsole.genruntimeconfig.cache
+/home/rbantu/projects/agentic-ai/TestConsole/obj/Debug/net6.0/ref/TestConsole.dll

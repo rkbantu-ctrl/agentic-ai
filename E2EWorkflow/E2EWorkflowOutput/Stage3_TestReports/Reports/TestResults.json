@@ -1,0 +1,147 @@
+{
+  "ApiTitle": "Attachment Service API",
+  "ApiVersion": "1.0.8",
+  "TotalTests": 17,
+  "PassedTests": 12,
+  "FailedTests": 5,
+  "SuccessRate": 70.58823529411765,
+  "GeneratedOn": "2025-09-30 20:11:04",
+  "Results": {
+    "Health Check - Verify API is available": {
+      "ScenarioName": "Health Check - Verify API is available",
+      "Category": "Health Checks",
+      "Success": false,
+      "ExecutionTimeMs": 510,
+      "ErrorMessage": "JSON parsing error: Unexpected token",
+      "StackTrace": "   at TestProject.StepDefinitions.Health_ChecksSteps.And_the_response_should_contain_health_status_information() in Health_ChecksSteps.cs:line 87"
+    },
+    "Upload a file with metadata": {
+      "ScenarioName": "Upload a file with metadata",
+      "Category": "Files",
+      "Success": true,
+      "ExecutionTimeMs": 1321,
+      "ErrorMessage": null,
+      "StackTrace": null
+    },
+    "POST /api/v1/files - Error handling": {
+      "ScenarioName": "POST /api/v1/files - Error handling",
+      "Category": "Files",
+      "Success": true,
+      "ExecutionTimeMs": 952,
+      "ErrorMessage": null,
+      "StackTrace": null
+    },
+    "Download a file": {
+      "ScenarioName": "Download a file",
+      "Category": "Files",
+      "Success": true,
+      "ExecutionTimeMs": 1534,
+      "ErrorMessage": null,
+      "StackTrace": null
+    },
+    "GET /api/v1/files/{attachmentId} - Error handling": {
+      "ScenarioName": "GET /api/v1/files/{attachmentId} - Error handling",
+      "Category": "Files",
+      "Success": false,
+      "ExecutionTimeMs": 1299,
+      "ErrorMessage": "Expected value \u0027active\u0027 but found \u0027inactive\u0027",
+      "StackTrace": "   at TestProject.StepDefinitions.FilesSteps.Then_I_should_receive_a_401_Unauthorized_response() in FilesSteps.cs:line 64"
+    },
+    "Delete a file": {
+      "ScenarioName": "Delete a file",
+      "Category": "Files",
+      "Success": true,
+      "ExecutionTimeMs": 1905,
+      "ErrorMessage": null,
+      "StackTrace": null
+    },
+    "DELETE /api/v1/files/{attachmentId} - Error handling": {
+      "ScenarioName": "DELETE /api/v1/files/{attachmentId} - Error handling",
+      "Category": "Files",
+      "Success": true,
+      "ExecutionTimeMs": 1533,
+      "ErrorMessage": null,
+      "StackTrace": null
+    },
+    "Update file metadata": {
+      "ScenarioName": "Update file metadata",
+      "Category": "Files",
+      "Success": false,
+      "ExecutionTimeMs": 161,
+      "ErrorMessage": "Expected value \u0027active\u0027 but found \u0027inactive\u0027",
+      "StackTrace": "   at TestProject.StepDefinitions.FilesSteps.And_the_response_should_have_the_correct_content_type() in FilesSteps.cs:line 61"
+    },
+    "PATCH /api/v1/files/{attachmentId} - Error handling": {
+      "ScenarioName": "PATCH /api/v1/files/{attachmentId} - Error handling",
+      "Category": "Files",
+      "Success": true,
+      "ExecutionTimeMs": 821,
+      "ErrorMessage": null,
+      "StackTrace": null
+    },
+    "List of files by key": {
+      "ScenarioName": "List of files by key",
+      "Category": "Files",
+      "Success": true,
+      "ExecutionTimeMs": 1197,
+      "ErrorMessage": null,
+      "StackTrace": null
+    },
+    "GET /api/v1/files/{key}/{keyValue} - Error handling": {
+      "ScenarioName": "GET /api/v1/files/{key}/{keyValue} - Error handling",
+      "Category": "Files",
+      "Success": false,
+      "ExecutionTimeMs": 593,
+      "ErrorMessage": "Connection refused",
+      "StackTrace": "   at TestProject.StepDefinitions.FilesSteps.Then_I_should_receive_a_401_Unauthorized_response() in FilesSteps.cs:line 50"
+    },
+    "Retrieve file metadata": {
+      "ScenarioName": "Retrieve file metadata",
+      "Category": "Files",
+      "Success": true,
+      "ExecutionTimeMs": 845,
+      "ErrorMessage": null,
+      "StackTrace": null
+    },
+    "GET /api/v1/files/{attachmentId}/metadata - Error handling": {
+      "ScenarioName": "GET /api/v1/files/{attachmentId}/metadata - Error handling",
+      "Category": "Files",
+      "Success": false,
+      "ExecutionTimeMs": 863,
+      "ErrorMessage": "Server returned internal error (500)",
+      "StackTrace": "   at TestProject.StepDefinitions.FilesSteps.Then_I_should_receive_a_401_Unauthorized_response() in FilesSteps.cs:line 55"
+    },
+    "Copy a file to a new location with a new name": {
+      "ScenarioName": "Copy a file to a new location with a new name",
+      "Category": "Copy-file",
+      "Success": true,
+      "ExecutionTimeMs": 854,
+      "ErrorMessage": null,
+      "StackTrace": null
+    },
+    "POST /copy-file/{attachmentId}/{newFileName} - Error handling": {
+      "ScenarioName": "POST /copy-file/{attachmentId}/{newFileName} - Error handling",
+      "Category": "Copy-file",
+      "Success": true,
+      "ExecutionTimeMs": 1241,
+      "ErrorMessage": null,
+      "StackTrace": null
+    },
+    "Health Check": {
+      "ScenarioName": "Health Check",
+      "Category": "Healthcheck",
+      "Success": true,
+      "ExecutionTimeMs": 1861,
+      "ErrorMessage": null,
+      "StackTrace": null
+    },
+    "GET /healthcheck - Error handling": {
+      "ScenarioName": "GET /healthcheck - Error handling",
+      "Category": "Healthcheck",
+      "Success": true,
+      "ExecutionTimeMs": 1097,
+      "ErrorMessage": null,
+      "StackTrace": null
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/rbantu/projects/agentic-ai/AgenticSpecFlowWorkflow/src/AgenticSpecFlowWorkflow.csproj": {}
+  },
+  "projects": {
+    "/home/rbantu/projects/agentic-ai/AgenticSpecFlowWorkflow/src/AgenticSpecFlowWorkflow.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/rbantu/projects/agentic-ai/AgenticSpecFlowWorkflow/src/AgenticSpecFlowWorkflow.csproj",
+        "projectName": "AgenticSpecFlowWorkflow",
+        "projectPath": "/home/rbantu/projects/agentic-ai/AgenticSpecFlowWorkflow/src/AgenticSpecFlowWorkflow.csproj",
+        "packagesPath": "/home/rbantu/.nuget/packages/",
+        "outputPath": "/home/rbantu/projects/agentic-ai/AgenticSpecFlowWorkflow/src/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/rbantu/projects/agentic-ai/AgenticSpecFlowWorkflow/NuGet.Config",
+          "/home/rbantu/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.200"
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.6.0, )"
+            },
+            "NSwag.ApiDescription.Client": {
+              "target": "Package",
+              "version": "[13.20.0, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.13.3, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[4.4.2, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[110.2.0, )"
+            },
+            "Specflow": {
+              "target": "Package",
+              "version": "[3.9.74, )"
+            },
+            "Specflow.NUnit": {
+              "target": "Package",
+              "version": "[3.9.74, )"
+            },
+            "Specflow.Tools.MsBuild.Generation": {
+              "target": "Package",
+              "version": "[3.9.74, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.203/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,974 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Attachment Service API",
+    "description": "The Attachment Service provides an API for managing file attachments with metadata, \nutilizing OAuth 2.0 security. It enables users to upload medical attachments as \nevidence for insurance procedures. \n\nEach submission undergoes Optical Character Recognition (OCR) processing to extract \ntextual information, which is subsequently analyzed using AI technology. The AI system \nevaluates the information against established Care Guidelines to ensure compliance and \nsupport insurance claims verification. \n\nThis streamlined process enhances the accuracy and efficiency of handling medical \nattachment uploads.\n",
+    "contact": {
+      "name": "Collaborative Care Development Team",
+      "email": "CCSDevelopmentTeam@mcg.com"
+    },
+    "version": "1.0.8"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/MCG-Edge/AttachmentService/1.0.8",
+      "description": "SwaggerHub API Auto Mocking"
+    },
+    {
+      "url": "https://virtserver.swaggerhub.com/MCG-Edge/PCM_Attachment_Service_api/0.2.1",
+      "description": "SwaggerHub API Auto Mocking"
+    },
+    {
+      "url": "https://collabcare-wus2-dev-ms-fa.azurewebsites.net",
+      "description": "DEV CCMS"
+    },
+    {
+      "url": "https://collabcare-wus2-test-ms-fa.azurewebsites.net",
+      "description": "TEST CCMS"
+    },
+    {
+      "url": "https://collabcare-wus2-stage-ms-fa.azurewebsites.net",
+      "description": "STAGE CCMS"
+    }
+  ],
+  "security": [
+    {
+      "oauth2": [
+        "read",
+        "write"
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "Attachment Service",
+      "description": "The Attachment Service is a product offered by MCG"
+    }
+  ],
+  "paths": {
+    "/api/v1/files": {
+      "post": {
+        "summary": "Upload a file with metadata",
+        "description": "Allows users to upload files. Each file must include a tenant ID, file name, and binary content.\nThe CorrelationId header is optional; if not provided, the server will generate one.\n",
+        "parameters": [
+          {
+            "name": "CorrelationId",
+            "in": "header",
+            "description": "A GUID used to identify and trace the transaction. If omitted, the service will generate one.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tenantId",
+            "in": "header",
+            "description": "A string identifier that provides the ID of the tenant for whom the request is being made. \nThis is an internal-only call, so we are considering the tenantId to be coming from a trusted source.\n",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AttachmentUploadRequest"
+              },
+              "encoding": {
+                "metadata": {
+                  "style": "deepObject"
+                },
+                "tags": {
+                  "style": "deepObject"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "File uploaded successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentUploadResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. The request failed validation (e.g., missing fileName or invalid file).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal service error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/files/{attachmentId}": {
+      "get": {
+        "summary": "Download a file",
+        "description": "Retrieves the binary content of a file using its attachment ID.",
+        "parameters": [
+          {
+            "name": "attachmentId",
+            "in": "path",
+            "description": "Unique identifier for the downloaded attachment.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CorrelationId",
+            "in": "header",
+            "description": "A GUID used to identify and trace the transaction. If omitted, the service will generate one.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tenantId",
+            "in": "header",
+            "description": "A string identifier that provides the ID of the tenant for whom the request is being made.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File downloaded successfully as application/octet-stream.",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Details for the content disposition with fileName.",
+                "schema": {
+                  "type": "string",
+                  "example": "attachment; fileName=\"example.txt\""
+                }
+              }
+            },
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. The request failed validation (e.g., missing attachmentId or invalid tenant).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "File not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal service error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a file",
+        "description": "Removes a file using its attachment ID.",
+        "parameters": [
+          {
+            "name": "attachmentId",
+            "in": "path",
+            "description": "Unique identifier for the file to be deleted.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CorrelationId",
+            "in": "header",
+            "description": "A GUID used to identify and trace the transaction. If omitted, the service will generate one.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tenantId",
+            "in": "header",
+            "description": "A string identifier that provides the ID of the tenant for whom the request is being made.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Notify",
+            "in": "header",
+            "description": "Optional flag to notify downstream services of the delete operation. Defaults to true.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content, file deleted successfully."
+          },
+          "400": {
+            "description": "Bad request. The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal service error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update file metadata",
+        "description": "Modifies metadata and attributes of a file using its attachment ID.",
+        "parameters": [
+          {
+            "name": "attachmentId",
+            "in": "path",
+            "description": "Unique identifier for the file to be patched.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CorrelationId",
+            "in": "header",
+            "description": "A GUID used to identify and trace the transaction. If omitted, the service will generate one.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tenantId",
+            "in": "header",
+            "description": "A string identifier that provides the ID of the tenant for whom the request is being made.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttachmentPatchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Metadata updated successfully."
+          },
+          "400": {
+            "description": "Bad request. The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal service error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/files/{key}/{keyValue}": {
+      "get": {
+        "summary": "List of files by key",
+        "description": "Retrieves a list of all files associated with a specific metadata key/value pair.\nThe includeDeleted header is optional and defaults to false when not provided.\n",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "description": "Metadata key to search by (e.g., associatedRecordId, episodeId).",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "associatedRecordId"
+          },
+          {
+            "name": "keyValue",
+            "in": "path",
+            "description": "Search value.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "EPS-123456"
+          },
+          {
+            "name": "CorrelationId",
+            "in": "header",
+            "description": "A GUID used to identify and trace the transaction. If omitted, the service will generate one.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tenantId",
+            "in": "header",
+            "description": "A string identifier that provides the ID of the tenant for whom the request is being made.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeDeleted",
+            "in": "header",
+            "description": "When true, includes attachments marked as deleted in results. Defaults to false.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of files retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentFilesList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No files found matching the specified key/value.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal service error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/files/{attachmentId}/metadata": {
+      "get": {
+        "summary": "Retrieve file metadata",
+        "description": "Retrieves metadata for a specific file using its attachment ID.\nThe includeDeleted header is optional and defaults to false when not provided.\n",
+        "parameters": [
+          {
+            "name": "attachmentId",
+            "in": "path",
+            "description": "Unique identifier for the metadata retrieval.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CorrelationId",
+            "in": "header",
+            "description": "A GUID used to identify and trace the transaction. If omitted, the service will generate one.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tenantId",
+            "in": "header",
+            "description": "A string identifier that provides the ID of the tenant for whom the request is being made.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeDeleted",
+            "in": "header",
+            "description": "When true, returns metadata even if attachment is marked as deleted. Defaults to false.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Metadata retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentMetadata"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "File not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal service error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/copy-file/{attachmentId}/{newFileName}": {
+      "post": {
+        "summary": "Copy a file to a new location with a new name",
+        "description": "This endpoint allows duplication of an existing file specified by attachmentId, saving it as a new file with the provided newFileName.",
+        "parameters": [
+          {
+            "name": "attachmentId",
+            "in": "path",
+            "description": "Unique identifier of the file to be copied.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "newFileName",
+            "in": "path",
+            "description": "The new name for the copied file.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CorrelationId",
+            "in": "header",
+            "description": "A GUID used to identify the transaction through all of the different applications it interacts with. The 'CorrelationId' should be set by the requesting entity, and the same ID should be used throughout the entire transaction.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tenantId",
+            "in": "header",
+            "description": "A string identifier that provides the ID of the tenant for whom the request is being made. This is an internal-only call, so we are considering the tenantId to be coming from a trusted source. In R2, this value will be sent in a more secure format.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File copied successfully to the new location."
+          },
+          "403": {
+            "description": "Forbidden - You do not have permission to access the file or the target location.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "File not found - The specified file does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable - Unable to process the request at this time.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/healthcheck": {
+      "get": {
+        "summary": "Health Check",
+        "description": "This Health Check endpoint verifies the connectivity and operational status of critical system components essential for service functionality. It checks the connection to the service bus, database, and blob storage, as well as the availability of the function endpoints. By performing these checks, the endpoint ensures that each component is reachable and functioning as expected. The health check provides real-time status        updates, helping identify potential issues, and ensuring reliable system performance \n  and availability. This seamless integration of health checks supports proactive\n  maintenance and helps ensure uninterrupted service delivery.\n",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Notification": {
+        "required": [
+          "CorrelationId",
+          "ServiceId",
+          "attachmentId",
+          "isPcmEnabled",
+          "metadata",
+          "operation",
+          "tenantId"
+        ],
+        "type": "object",
+        "properties": {
+          "ServiceId": {
+            "type": "string",
+            "description": "ID of the service making the request, e.g., AttachmentService."
+          },
+          "CorrelationId": {
+            "type": "string",
+            "description": "A GUID used to identify the transaction."
+          },
+          "attachmentId": {
+            "type": "string",
+            "description": "Unique identifier for the file to be processed."
+          },
+          "fileName": {
+            "type": "string",
+            "description": "The name of the attached file."
+          },
+          "tenantId": {
+            "type": "string",
+            "description": "A UUID that uniquely identifies the tenant associated with the file. This ensures that files are correctly organized and managed within tenant-specific environments."
+          },
+          "operation": {
+            "type": "string",
+            "description": "Type of operation (e.g., CRUD).",
+            "enum": [
+              "Create",
+              "Read",
+              "Update",
+              "Delete",
+              "Copy",
+              "Reprocess"
+            ]
+          },
+          "isPcmEnabled": {
+            "type": "boolean",
+            "description": "A boolean that says whether PCM is enabled for this tenant. If PCM is enabled, the CDM and OCR will process new attachments. If it is not enabled, the attachments will be ignored."
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "description": "The AttachmentService will post notification messages to the Attachment-Notification topic on the service bus. This is a fire-and-forget message that will allow anyone interested that something happened. Services like CWQI and the CDM will subscribe to this topic and handle messages accordingly. The CDM will be interested in CREATE messages, knowing that a new attachment has been sent. It may also be interested in UPDATE and DELETE messages. CWQI will monitor for all message types to add to the audit log."
+      },
+      "AttachmentUploadRequest": {
+        "required": [
+          "file",
+          "metadata"
+        ],
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "description": "Binary string of the file to be uploaded.",
+            "format": "binary"
+          },
+          "username": {
+            "type": "string",
+            "description": "The username of the user who uploaded the file.",
+            "example": "UMnurse1"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "The first name of the user who uploaded the file.",
+            "example": "Jean"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The last name of the user who uploaded the file.",
+            "example": "Valjean"
+          },
+          "description": {
+            "type": "string",
+            "description": "A description of the attachment that was uploaded.",
+            "example": "Results from CT Scan"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/AttachmentUploadRequest_metadata"
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Optional tags to associate with the attachment."
+          }
+        }
+      },
+      "AttachmentUploadResponse": {
+        "required": [
+          "attachmentId",
+          "originalFileName",
+          "success"
+        ],
+        "type": "object",
+        "properties": {
+          "attachmentId": {
+            "type": "string",
+            "description": "Unique identifier for the uploaded attachment."
+          },
+          "originalFileName": {
+            "type": "string",
+            "description": "Original name of the uploaded file."
+          },
+          "success": {
+            "type": "boolean",
+            "description": "Success or error message for the file."
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "description": "Additional metadata properties."
+            }
+          }
+        }
+      },
+      "AttachmentDownloadResponse": {
+        "required": [
+          "fileContents",
+          "fileDownloadName"
+        ],
+        "type": "object",
+        "properties": {
+          "fileDownloadName": {
+            "type": "string",
+            "description": "Name of the downloaded file, including the extension."
+          },
+          "fileContents": {
+            "type": "string",
+            "description": "Base64-encoded byte array, that represent the file contents.",
+            "format": "byte"
+          }
+        }
+      },
+      "AttachmentFilesList": {
+        "required": [
+          "attachments",
+          "tenantId"
+        ],
+        "type": "object",
+        "properties": {
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttachmentFilesList_attachments"
+            }
+          },
+          "tenantId": {
+            "type": "string"
+          }
+        },
+        "description": "Search results for files matching a key/value pair."
+      },
+      "AttachmentPatchRequest": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "Arbitrary key/value metadata to update. All values are strings."
+      },
+      "AttachmentMetadata": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "A dictionary of metadata for the attachment."
+      },
+      "ErrorResponse": {
+        "required": [
+          "code",
+          "correlationId",
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "correlationId": {
+            "type": "string",
+            "description": "Unique identifier for the transaction."
+          },
+          "code": {
+            "type": "string",
+            "description": "General error code for the response."
+          },
+          "message": {
+            "type": "string",
+            "description": "Message that provides a general description of the error."
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the error."
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ErrorResponse_errors"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "inline_response_200": {
+        "type": "object",
+        "properties": {
+          "attachmentStatus": {
+            "type": "string",
+            "description": "This will be OK if all associated service health checks come back as OK, \n  or Error if one of the associated services has an issue.\n",
+            "example": "Error",
+            "enum": [
+              "OK",
+              "Error"
+            ]
+          },
+          "errorDetail": {
+            "type": "string",
+            "description": "Additional information if there is an issue with the health check. An error does not guarantee that this will have a value.\n",
+            "example": "Error checking database, OCR Unavaiable"
+          },
+          "serviceBusStatus": {
+            "type": "string",
+            "description": "Status of the service bus. This will return an OK if everything\n  is working as expected, an error if there is an internal error or\n  an issue is discovered while checking, or unavailable if the service\n  cannot be reached.\n",
+            "example": "Unavailable",
+            "enum": [
+              "OK",
+              "Error",
+              "Unavailable"
+            ]
+          },
+          "databaseStatus": {
+            "type": "string",
+            "description": "Status of the database. This will return an OK if everything\n  is working as expected, an error if there is an internal error or\n  an issue is discovered while checking, or unavailable if the service\n  cannot be reached.\n",
+            "example": "Error",
+            "enum": [
+              "OK",
+              "Error",
+              "Unavailable"
+            ]
+          },
+          "blobStorageStatus": {
+            "type": "string",
+            "description": "Status of the blob storage. This will return an OK if everything\n  is working as expected, an error if there is an internal error or\n  an issue is discovered while checking, or unavailable if the service\n  cannot be reached.\n",
+            "example": "OK",
+            "enum": [
+              "OK",
+              "Error",
+              "Unavailable"
+            ]
+          }
+        }
+      },
+      "AttachmentUploadRequest_metadata": {
+        "required": [
+          "fileName"
+        ],
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "description": "The name of the file being uploaded.",
+            "example": "ctresults.dcm"
+          },
+          "associatedRecordId": {
+            "type": "string",
+            "description": "The identifier for the record being reasoned over. This might be the episode ID, the encounter ID, or some other identifier.",
+            "example": "eps-24601"
+          }
+        },
+        "additionalProperties": {
+          "type": "string",
+          "description": "Additional metadata properties. This must include 'fileName', with the name and file extension in the format of 'example.txt'."
+        }
+      },
+      "AttachmentFilesList_attachments": {
+        "type": "object",
+        "properties": {
+          "attachmentId": {
+            "type": "string"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string"
+          }
+        }
+      },
+      "ErrorResponse_errors": {
+        "required": [
+          "code",
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Specific error code."
+          },
+          "message": {
+            "type": "string",
+            "description": "Specific error message."
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://auth.example.com/oauth2/authorize",
+            "tokenUrl": "https://auth.example.com/oauth2/token",
+            "scopes": {
+              "read": "Grants read access",
+              "write": "Grants write access",
+              "delete": "Grants delete access"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+/home/rbantu/projects/agentic-ai/SimpleWorkflow/bin/Debug/net6.0/SimpleWorkflow
+/home/rbantu/projects/agentic-ai/SimpleWorkflow/bin/Debug/net6.0/SimpleWorkflow.deps.json
+/home/rbantu/projects/agentic-ai/SimpleWorkflow/bin/Debug/net6.0/SimpleWorkflow.runtimeconfig.json
+/home/rbantu/projects/agentic-ai/SimpleWorkflow/bin/Debug/net6.0/SimpleWorkflow.dll
+/home/rbantu/projects/agentic-ai/SimpleWorkflow/bin/Debug/net6.0/SimpleWorkflow.pdb
+/home/rbantu/projects/agentic-ai/SimpleWorkflow/obj/Debug/net6.0/SimpleWorkflow.GeneratedMSBuildEditorConfig.editorconfig
+/home/rbantu/projects/agentic-ai/SimpleWorkflow/obj/Debug/net6.0/SimpleWorkflow.AssemblyInfoInputs.cache
+/home/rbantu/projects/agentic-ai/SimpleWorkflow/obj/Debug/net6.0/SimpleWorkflow.AssemblyInfo.cs
+/home/rbantu/projects/agentic-ai/SimpleWorkflow/obj/Debug/net6.0/SimpleWorkflow.csproj.CoreCompileInputs.cache
+/home/rbantu/projects/agentic-ai/SimpleWorkflow/obj/Debug/net6.0/SimpleWorkflow.dll
+/home/rbantu/projects/agentic-ai/SimpleWorkflow/obj/Debug/net6.0/refint/SimpleWorkflow.dll
+/home/rbantu/projects/agentic-ai/SimpleWorkflow/obj/Debug/net6.0/SimpleWorkflow.pdb
+/home/rbantu/projects/agentic-ai/SimpleWorkflow/obj/Debug/net6.0/SimpleWorkflow.genruntimeconfig.cache
+/home/rbantu/projects/agentic-ai/SimpleWorkflow/obj/Debug/net6.0/ref/SimpleWorkflow.dll

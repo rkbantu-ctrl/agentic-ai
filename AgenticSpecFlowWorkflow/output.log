@@ -1,0 +1,2 @@
+/home/rbantu/projects/agentic-ai/AgenticSpecFlowWorkflow/src/AgenticSpecFlowWorkflow.csproj : warning NU1902: Package 'RestSharp' 110.2.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-4rr6-2v9v-wcpc
+/home/rbantu/projects/agentic-ai/AgenticSpecFlowWorkflow/src/AgenticSpecFlowWorkflow.csproj : warning NU1902: Package 'RestSharp' 110.2.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-4rr6-2v9v-wcpc

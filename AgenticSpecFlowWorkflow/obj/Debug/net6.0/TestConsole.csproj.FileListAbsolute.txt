@@ -1,0 +1,4 @@
+/home/rbantu/projects/agentic-ai/AgenticSpecFlowWorkflow/obj/Debug/net6.0/TestConsole.GeneratedMSBuildEditorConfig.editorconfig
+/home/rbantu/projects/agentic-ai/AgenticSpecFlowWorkflow/obj/Debug/net6.0/TestConsole.AssemblyInfoInputs.cache
+/home/rbantu/projects/agentic-ai/AgenticSpecFlowWorkflow/obj/Debug/net6.0/TestConsole.AssemblyInfo.cs
+/home/rbantu/projects/agentic-ai/AgenticSpecFlowWorkflow/obj/Debug/net6.0/TestConsole.csproj.CoreCompileInputs.cache

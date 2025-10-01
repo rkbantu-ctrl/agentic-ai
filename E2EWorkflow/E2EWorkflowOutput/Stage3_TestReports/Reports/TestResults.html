@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Attachment Service API Test Results</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+h1 { color: #333; }
+.summary { margin: 20px 0; padding: 10px; background-color: #f5f5f5; border-radius: 5px; }
+.success { color: green; }
+.failure { color: red; }
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+th { background-color: #f2f2f2; }
+tr:hover { background-color: #f5f5f5; }
+.success-row { background-color: #dff0d8; }
+.failure-row { background-color: #f2dede; }
+</style>
+</head>
+<body>
+<h1>Attachment Service API Test Results</h1>
+<div class="summary">
+<p><strong>Total Tests:</strong> 17</p>
+<p><strong>Passed:</strong> <span class="success">12</span></p>
+<p><strong>Failed:</strong> <span class="failure">5</span></p>
+<p><strong>Success Rate:</strong> 70.6%</p>
+</div>
+<h2>Test Results</h2>
+<table>
+<tr>
+<th>Scenario</th>
+<th>Category</th>
+<th>Status</th>
+<th>Execution Time (ms)</th>
+<th>Error Details</th>
+</tr>
+<tr class="failure-row">
+<td>Health Check - Verify API is available</td>
+<td>Health Checks</td>
+<td class="failure">Failed</td>
+<td>510</td>
+<td>JSON parsing error: Unexpected token<br><pre>   at TestProject.StepDefinitions.Health_ChecksSteps.And_the_response_should_contain_health_status_information() in Health_ChecksSteps.cs:line 87</pre></td>
+</tr>
+<tr class="success-row">
+<td>Upload a file with metadata</td>
+<td>Files</td>
+<td class="success">Passed</td>
+<td>1321</td>
+<td>-</td>
+</tr>
+<tr class="success-row">
+<td>POST /api/v1/files - Error handling</td>
+<td>Files</td>
+<td class="success">Passed</td>
+<td>952</td>
+<td>-</td>
+</tr>
+<tr class="success-row">
+<td>Download a file</td>
+<td>Files</td>
+<td class="success">Passed</td>
+<td>1534</td>
+<td>-</td>
+</tr>
+<tr class="failure-row">
+<td>GET /api/v1/files/{attachmentId} - Error handling</td>
+<td>Files</td>
+<td class="failure">Failed</td>
+<td>1299</td>
+<td>Expected value 'active' but found 'inactive'<br><pre>   at TestProject.StepDefinitions.FilesSteps.Then_I_should_receive_a_401_Unauthorized_response() in FilesSteps.cs:line 64</pre></td>
+</tr>
+<tr class="success-row">
+<td>Delete a file</td>
+<td>Files</td>
+<td class="success">Passed</td>
+<td>1905</td>
+<td>-</td>
+</tr>
+<tr class="success-row">
+<td>DELETE /api/v1/files/{attachmentId} - Error handling</td>
+<td>Files</td>
+<td class="success">Passed</td>
+<td>1533</td>
+<td>-</td>
+</tr>
+<tr class="failure-row">
+<td>Update file metadata</td>
+<td>Files</td>
+<td class="failure">Failed</td>
+<td>161</td>
+<td>Expected value 'active' but found 'inactive'<br><pre>   at TestProject.StepDefinitions.FilesSteps.And_the_response_should_have_the_correct_content_type() in FilesSteps.cs:line 61</pre></td>
+</tr>
+<tr class="success-row">
+<td>PATCH /api/v1/files/{attachmentId} - Error handling</td>
+<td>Files</td>
+<td class="success">Passed</td>
+<td>821</td>
+<td>-</td>
+</tr>
+<tr class="success-row">
+<td>List of files by key</td>
+<td>Files</td>
+<td class="success">Passed</td>
+<td>1197</td>
+<td>-</td>
+</tr>
+<tr class="failure-row">
+<td>GET /api/v1/files/{key}/{keyValue} - Error handling</td>
+<td>Files</td>
+<td class="failure">Failed</td>
+<td>593</td>
+<td>Connection refused<br><pre>   at TestProject.StepDefinitions.FilesSteps.Then_I_should_receive_a_401_Unauthorized_response() in FilesSteps.cs:line 50</pre></td>
+</tr>
+<tr class="success-row">
+<td>Retrieve file metadata</td>
+<td>Files</td>
+<td class="success">Passed</td>
+<td>845</td>
+<td>-</td>
+</tr>
+<tr class="failure-row">
+<td>GET /api/v1/files/{attachmentId}/metadata - Error handling</td>
+<td>Files</td>
+<td class="failure">Failed</td>
+<td>863</td>
+<td>Server returned internal error (500)<br><pre>   at TestProject.StepDefinitions.FilesSteps.Then_I_should_receive_a_401_Unauthorized_response() in FilesSteps.cs:line 55</pre></td>
+</tr>
+<tr class="success-row">
+<td>Copy a file to a new location with a new name</td>
+<td>Copy-file</td>
+<td class="success">Passed</td>
+<td>854</td>
+<td>-</td>
+</tr>
+<tr class="success-row">
+<td>POST /copy-file/{attachmentId}/{newFileName} - Error handling</td>
+<td>Copy-file</td>
+<td class="success">Passed</td>
+<td>1241</td>
+<td>-</td>
+</tr>
+<tr class="success-row">
+<td>Health Check</td>
+<td>Healthcheck</td>
+<td class="success">Passed</td>
+<td>1861</td>
+<td>-</td>
+</tr>
+<tr class="success-row">
+<td>GET /healthcheck - Error handling</td>
+<td>Healthcheck</td>
+<td class="success">Passed</td>
+<td>1097</td>
+<td>-</td>
+</tr>
+</table>
+</body>
+</html>
